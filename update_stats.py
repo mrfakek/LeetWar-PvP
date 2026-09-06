@@ -8,7 +8,7 @@ PLAYERS = {
 }
 
 def get_leetcode_stats(username):
-    url = f"https://vercel.app{username}"
+    url = f"https://vercel.app/{username}"
     try:
         response = requests.get(url, timeout=15)
         if response.status_code == 200:
