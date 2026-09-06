@@ -8,26 +8,24 @@ PLAYERS = {
 }
 
 def get_leetcode_stats(username):
-    # Используем открытое стабильное зеркало API LeetCode для обхода блокировок GitHub
-    url = f"https://herokuapp.com/{username}"
-
+    # Работаем через стабильное и быстрое API-зеркало без блокировок SSL
+    url = f"https://onrender.com{username}"
     
     try:
         response = requests.get(url, timeout=15)
         if response.status_code == 200:
             data = response.json()
-            # Проверяем, что профиль успешно найден на сервере
-            if data.get("status") == "success":
+            
+            # Проверяем структуру ответа
+            if "totalSolved" in data:
                 return {
                     "easy": data.get("easySolved", 0),
                     "medium": data.get("mediumSolved", 0),
                     "hard": data.get("hardSolved", 0),
                     "total": data.get("totalSolved", 0)
                 }
-            else:
-                print(f"⚠️ Пользователь {username} не найден на LeetCode.")
     except Exception as e:
-        print(f"❌ Ошибка получения данных для {username}: {e}")
+        print(f"Ошибка получения данных для {username}: {e}")
         
     return {"easy": 0, "medium": 0, "hard": 0, "total": 0}
 
@@ -38,7 +36,7 @@ def main():
     leaderboard = []
     
     for display_name, leetcode_username in PLAYERS.items():
-        print(f"Загрузка данных через зеркало для {display_name}...")
+        print(f"Загрузка данных для {display_name}...")
         stats = get_leetcode_stats(leetcode_username)
         xp = calculate_xp(stats)
         
@@ -51,10 +49,10 @@ def main():
             "xp": xp
         })
     
-    # Сортировка по очкам опыта
+    # Сортировка участников по количеству XP
     leaderboard.sort(key=lambda x: x["xp"], reverse=True)
     
-    # Сборка разметки таблицы
+    # Сборка структуры Markdown таблицы
     table_lines = [
         "| Место | Герой | 🟢 Easy | 🟡 Med | 🔴 Hard | Всего задач | 🔥 Общий счет (XP) |",
         "| :---: | :--- | :---: | :---: | :---: | :---: | :---: |"
@@ -68,7 +66,7 @@ def main():
         
     new_table_content = "\n".join(table_lines)
     
-    # Запись в README
+    # Чтение и автоматическая перезапись README
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
         
@@ -79,7 +77,8 @@ def main():
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(updated_readme)
         
-    print("Таблица лидеров успешно обновлена!")
+    print("Таблица лидеров успешно обновлена новыми данными!")
 
 if __name__ == "__main__":
     main()
+
