@@ -3,8 +3,8 @@ import re
 
 # === НАСТРОЙКА ИГРОКОВ ===
 PLAYERS = {
-    "mrfakek": "mrfakek",
-    "TrueRyoB": "TrueRyoB"
+    "mrfakek-fortress": "mrfakek",
+    "TrueRyoB-fortress": "TrueRyoB"
 }
 
 def get_leetcode_stats(username):
