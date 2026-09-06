@@ -9,13 +9,8 @@ PLAYERS = {
 
 def get_leetcode_stats(username):
     url = "https://leetcode.com"
-    # Официальный запрос к LeetCode для получения количества решенных задач
     query = """
     query userProblemsSolved($username: String!) {
-        allQuestionsCount {
-            difficulty
-            count
-        }
         matchedUser(username: $username) {
             submitStatsGlobal {
                 acSubmissionNum {
@@ -26,35 +21,41 @@ def get_leetcode_stats(username):
         }
     }
     """
-    
     headers = {
         "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Referer": "https://leetcode.com/"
     }
     
     try:
         response = requests.post(url, json={"query": query, "variables": {"username": username}}, headers=headers, timeout=15)
         if response.status_code == 200:
             json_data = response.json()
-            if "data" in json_data and json_data["data"]["matchedUser"]:
+            
+            # Проверяем, существует ли вообще такой пользователь в системе LeetCode
+            if "data" in json_data and json_data["data"].get("matchedUser") is not None:
                 submission_stats = json_data["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
                 
-                # Инициализируем переменные под типы задач
                 stats = {"easy": 0, "medium": 0, "hard": 0, "total": 0}
                 for item in submission_stats:
-                    if item["difficulty"] == "Easy":
+                    # Переводим в нижний регистр, чтобы убрать проблемы с разным написанием "Easy" / "easy"
+                    diff = item["difficulty"].lower()
+                    if diff == "easy":
                         stats["easy"] = item["count"]
-                    elif item["difficulty"] == "Medium":
+                    elif diff == "medium":
                         stats["medium"] = item["count"]
-                    elif item["difficulty"] == "Hard":
+                    elif diff == "hard":
                         stats["hard"] = item["count"]
-                    elif item["difficulty"] == "All":
+                    elif diff == "all":
                         stats["total"] = item["count"]
                 return stats
+            else:
+                print(f"⚠️ Предупреждение: Пользователь {username} не найден на LeetCode (возможно, опечатка в нике).")
     except Exception as e:
-        print(f"Ошибка соединения с LeetCode для {username}: {e}")
+        print(f"❌ Ошибка соединения с LeetCode для {username}: {e}")
         
     return {"easy": 0, "medium": 0, "hard": 0, "total": 0}
+
 
 def calculate_xp(stats):
     return (stats["easy"] * 10) + (stats["medium"] * 50) + (stats["hard"] * 200)
