@@ -25,16 +25,13 @@
 
 ## 🎖️ Карточки Героев
 
+# 🎖️ Карточки Героев
+
 ### 🗡️ Игрок 1 (mrfakek)
-<p align="left">
-  <img src="https://jacoblin.cool" alt="LeetCode Stats mrfakek" />
-</p>
+![](https://vercel.app)
 
 ---
 
 ### 🛡️ Игрок 2 (TrueRyoB)
-<p align="left">
-  <img src="https://jacoblin.cool" alt="LeetCode Stats TrueRyoB" />
-</p>
-
+![](https://vercel.app)
 
