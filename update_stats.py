@@ -8,22 +8,52 @@ PLAYERS = {
 }
 
 def get_leetcode_stats(username):
-    url = f"https://vercel.app/{username}"
-    try:
-        response = requests.get(url, timeout=15)
-        if response.status_code == 200:
-            data = response.json()
-            if "parsedRawUser" in data:
-                stats = data["parsedRawUser"]["submitStatsGlobal"]["acSubmissionNum"]
-                # Порядок в API обычно: 0-All, 1-Easy, 2-Medium, 3-Hard
-                return {
-                    "easy": stats[1]["count"],
-                    "medium": stats[2]["count"],
-                    "hard": stats[3]["count"],
-                    "total": stats[0]["count"]
+    url = "https://leetcode.com"
+    # Официальный запрос к LeetCode для получения количества решенных задач
+    query = """
+    query userProblemsSolved($username: String!) {
+        allQuestionsCount {
+            difficulty
+            count
+        }
+        matchedUser(username: $username) {
+            submitStatsGlobal {
+                acSubmissionNum {
+                    difficulty
+                    count
                 }
+            }
+        }
+    }
+    """
+    
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    }
+    
+    try:
+        response = requests.post(url, json={"query": query, "variables": {"username": username}}, headers=headers, timeout=15)
+        if response.status_code == 200:
+            json_data = response.json()
+            if "data" in json_data and json_data["data"]["matchedUser"]:
+                submission_stats = json_data["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
+                
+                # Инициализируем переменные под типы задач
+                stats = {"easy": 0, "medium": 0, "hard": 0, "total": 0}
+                for item in submission_stats:
+                    if item["difficulty"] == "Easy":
+                        stats["easy"] = item["count"]
+                    elif item["difficulty"] == "Medium":
+                        stats["medium"] = item["count"]
+                    elif item["difficulty"] == "Hard":
+                        stats["hard"] = item["count"]
+                    elif item["difficulty"] == "All":
+                        stats["total"] = item["count"]
+                return stats
     except Exception as e:
-        print(f"Ошибка при запросе профиля {username}: {e}")
+        print(f"Ошибка соединения с LeetCode для {username}: {e}")
+        
     return {"easy": 0, "medium": 0, "hard": 0, "total": 0}
 
 def calculate_xp(stats):
@@ -33,7 +63,7 @@ def main():
     leaderboard = []
     
     for display_name, leetcode_username in PLAYERS.items():
-        print(f"Загрузка данных для {display_name}...")
+        print(f"Загрузка данных напрямую с LeetCode для {display_name}...")
         stats = get_leetcode_stats(leetcode_username)
         xp = calculate_xp(stats)
         
@@ -46,10 +76,10 @@ def main():
             "xp": xp
         })
     
-    # Сортируем: у кого больше XP, тот на 1 месте
+    # Сортировка по очкам опыта
     leaderboard.sort(key=lambda x: x["xp"], reverse=True)
     
-    # Собираем новую Markdown таблицу
+    # Сборка красивой разметки таблицы
     table_lines = [
         "| Место | Герой | 🟢 Easy | 🟡 Med | 🔴 Hard | Всего задач | 🔥 Общий счет (XP) |",
         "| :---: | :--- | :---: | :---: | :---: | :---: | :---: |"
@@ -63,7 +93,7 @@ def main():
         
     new_table_content = "\n".join(table_lines)
     
-    # Читаем README.md и обновляем таблицу между маркерами
+    # Запись новой таблицы в README
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
         
@@ -74,7 +104,7 @@ def main():
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(updated_readme)
         
-    print("Таблица лидеров успешно пересчитана!")
+    print("Таблица лидеров успешно обновлена официальными данными!")
 
 if __name__ == "__main__":
     main()
