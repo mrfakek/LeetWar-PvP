@@ -27,14 +27,14 @@
 
 ### 🗡️ Игрок 1 (mrfakek)
 <p align="left">
-  <img src="https://vercel.app" alt="LeetCode Stats mrfakek" />
+  <img src="https://jacoblin.cool" alt="LeetCode Stats mrfakek" />
 </p>
 
 ---
 
 ### 🛡️ Игрок 2 (TrueRyoB)
 <p align="left">
-  <img src="https://vercel.app" alt="LeetCode Stats TrueRyoB" />
+  <img src="https://jacoblin.cool" alt="LeetCode Stats TrueRyoB" />
 </p>
 
 
