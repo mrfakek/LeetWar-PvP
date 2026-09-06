@@ -28,10 +28,10 @@
 # 🎖️ Карточки Героев
 
 ### 🗡️ Игрок 1 (mrfakek)
-![](https://vercel.app)
+![LeetCode stats](https://leetcode-stats-six.vercel.app/mrfakek?theme=dark)
 
 ---
 
 ### 🛡️ Игрок 2 (TrueRyoB)
-![](https://vercel.app)
+![LeetCode stats](https://leetcode-stats-six.vercel.app/TrueRyoB?theme=dark)
 
