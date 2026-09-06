@@ -9,46 +9,36 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # ШАГ 1: Принудительно скачиваем файлы вашего репозитория (включая update_stats.py)
       - name: Checkout repository code
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
+      # ШАГ 2: Разворачиваем Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
+      # ШАГ 3: Устанавливаем библиотеку запросов к LeetCode API
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests
 
-      # ШАГ 1: Запускаем наш калькулятор опыта для таблицы
+      # ШАГ 4: Переходим в рабочую папку и запускаем наш калькулятор опыта
       - name: Run XP calculator
-        run: python update_stats.py
+        run: |
+          echo "Текущая папка: $(pwd)"
+          echo "Список файлов:"
+          ls -la
+          python update_stats.py
 
-      # ШАГ 2: Генерируем красивую карточку для mrfakek
-      - name: Generate Card for mrfakek
-        uses: joshcai/leetcode-stats-action@v2
-        with:
-          username: mrfakek
-          theme: dark
-
-      # ШАГ 3: Генерируем красивую карточку для TrueRyoB
-      - name: Generate Card for TrueRyoB
-        uses: joshcai/leetcode-stats-action@v2
-        with:
-          username: TrueRyoB
-          theme: dark
-          # Перенаправляем вторую карточку в её личные маркеры
-          start_marker: "<!-- leetcode_friend:start -->"
-          end_marker: "<!-- leetcode_friend:end -->"
-
-      # ШАГ 4: Сохраняем всё вместе в README.md
+      # ШАГ 5: Записываем обновленные данные в README.md
       - name: Commit and Push changes
         run: |
           git config --global user.name "LeetWarBot"
           git config --global user.email "bot@leetwar.com"
           git add README.md
-          git diff --quiet && git diff --staged --quiet || (git commit -m "⚔️ Робот обновил таблицу PvP, XP и карточки" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "⚔️ Робот обновил таблицу PvP и XP" && git push)
