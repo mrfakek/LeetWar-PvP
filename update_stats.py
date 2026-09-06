@@ -4,7 +4,7 @@ import re
 # === НАСТРОЙКА ИГРОКОВ ===
 PLAYERS = {
     "mrfakek": "mrfakek",
-    "TrueRyoB": "TrueRyoB"
+    "Тестовый Авичи": "awice"
 }
 
 def get_leetcode_stats(username):
