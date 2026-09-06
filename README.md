@@ -23,15 +23,19 @@
 
 ## 🎖️ Карточки Героев
 
+## 🎖️ Карточки Героев
+
 ### 🗡️ Игрок 1 (mrfakek)
-<!-- leetcode:start -->
-<!-- leetcode:end -->
+<p align="left">
+  <img src="https://vercel.app" alt="LeetCode Stats mrfakek" />
+</p>
 
 ---
 
 ### 🛡️ Игрок 2 (TrueRyoB)
-<!-- leetcode_friend:start -->
-<!-- leetcode_friend:end -->
+<p align="left">
+  <img src="https://vercel.app" alt="LeetCode Stats TrueRyoB" />
+</p>
 
 
 
