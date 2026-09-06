@@ -9,7 +9,9 @@ PLAYERS = {
 
 def get_leetcode_stats(username):
     # Работаем через стабильное и быстрое API-зеркало без блокировок SSL
-    url = "https://onrender.com" + str(username)
+    site = "https://alfa-leetcode-api.onrender.com"
+    folder = "/userProfile/"
+    url = site + folder + str(username)
     
     try:
         response = requests.get(url, timeout=15)
