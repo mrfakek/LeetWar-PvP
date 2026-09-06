@@ -9,9 +9,7 @@ PLAYERS = {
 
 def get_leetcode_stats(username):
     # Используем открытое стабильное зеркало API LeetCode для обхода блокировок GitHub
-    base = "https://leetcode-stats-api."
-    domain = "://herokuapp.com"
-    url = base + domain + str(username)
+    url = f"https://herokuapp.com/{username}"
 
     
     try:
