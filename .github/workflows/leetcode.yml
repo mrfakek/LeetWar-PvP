@@ -26,6 +26,7 @@ jobs:
 
       # Запускаем наш калькулятор опыта (XP)
       - name: Run XP calculator
+        working-directory: ${{ github.workspace }}
         run: python update_stats.py
 
       # Сохраняем обновленный README.md обратно в ваш репозиторий
