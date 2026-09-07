@@ -5,7 +5,7 @@ import re
 # Имена в левой части автоматически станут названиями колонок в таблице
 PLAYERS = {
     "mrfakek-fortress": "mrfakek",
-    "TrueRyoB-fortress": "TrueRyoB"
+    "TrueRyoB-fortress": "ramand"
 }
 
 def get_leetcode_stats(username):
