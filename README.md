@@ -1,6 +1,6 @@
 # ⚔️ LeetWar: Битва Некромантов
 
-Добро пожаловать в проклятые земли! Два темных мага призывают армию тьмы в свои личные Крепости (`mrfakek-fortress` и `TrueRyoB-fortress`). 
+Добро пожаловать в проклятые земли! Два темных мага призывают армию тьмы в свои личные Крепости (`mrfakek-fortress` и `RamZzzeS-fortress`). 
 Каждая решенная задача на LeetCode — это новое заклинание, поднимающее монстров из могил и бездны. Чья орда поглотит этот мир?
 
 ---
@@ -28,6 +28,6 @@
 
 ---
 
-### 🛡️ Игрок 2 (TrueRyoB)
-![LeetCode stats](https://leetcode-stats-six.vercel.app/TrueRyoB?theme=dark)
+### 🛡️ Игрок 2 (RamZzzeS)
+![LeetCode stats](https://leetcode-stats-six.vercel.app/ramand?theme=dark)
 
